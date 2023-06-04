@@ -20,7 +20,7 @@ from model.modules.ema import EMA
 from util.file_utils import pickle_load_large_file
 
 
-data_folder = "./"
+data_folder = "./QANet-PyTorch/"
 parser = argparse.ArgumentParser(description='Lucy')
 
 # dataset
