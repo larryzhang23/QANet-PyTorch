@@ -70,7 +70,7 @@ parser.add_argument(
 # embedding
 parser.add_argument(
     '--glove_word_file',
-    default=data_folder + '.vector_cache/glove.840B.300d.txt',
+    default=data_folder + 'glove/glove.840B.300d.txt',
     type=str, help='path of word embedding file')
 parser.add_argument(
     '--glove_word_size',
@@ -95,7 +95,7 @@ parser.add_argument(
     help='whether train char embedding or not')
 parser.add_argument(
     '--glove_char_file',
-    default=data_folder + ".vector_cache/glove.840B.300d-char.txt",
+    default=data_folder + "glove/glove.840B.300d-char.txt",
     type=str, help='path of char embedding file')
 parser.add_argument(
     '--glove_char_size',
