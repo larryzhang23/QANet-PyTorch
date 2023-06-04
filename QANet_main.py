@@ -20,7 +20,7 @@ from model.modules.ema import EMA
 from util.file_utils import pickle_load_large_file
 
 
-data_folder = "../../../datasets/"
+data_folder = "./"
 parser = argparse.ArgumentParser(description='Lucy')
 
 # dataset
@@ -30,35 +30,37 @@ parser.add_argument(
     help='whether the dataset already processed')
 parser.add_argument(
     '--train_file',
-    default=data_folder + 'original/SQuAD/train-v1.1.json',
+    # default=data_folder + 'original/SQuAD/train-v1.1.json',
+    default="/kaggle/input/squad-larry23/train-v2.0.json",
     type=str, help='path of train dataset')
 parser.add_argument(
     '--dev_file',
-    default=data_folder + 'original/SQuAD/dev-v1.1.json',
+    # default=data_folder + 'original/SQuAD/dev-v1.1.json',
+    default="/kaggle/input/squad-larry23/dev-v2.0.json",
     type=str, help='path of dev dataset')
 parser.add_argument(
     '--train_examples_file',
-    default=data_folder + 'processed/SQuAD/train-v1.1-examples.pkl',
+    default=data_folder + 'processed/SQuAD/train-v2.0-examples.pkl',
     type=str, help='path of train dataset examples file')
 parser.add_argument(
     '--dev_examples_file',
-    default=data_folder + 'processed/SQuAD/dev-v1.1-examples.pkl',
+    default=data_folder + 'processed/SQuAD/dev-v2.0-examples.pkl',
     type=str, help='path of dev dataset examples file')
 parser.add_argument(
     '--train_meta_file',
-    default=data_folder + 'processed/SQuAD/train-v1.1-meta.pkl',
+    default=data_folder + 'processed/SQuAD/train-v2.0-meta.pkl',
     type=str, help='path of train dataset meta file')
 parser.add_argument(
     '--dev_meta_file',
-    default=data_folder + 'processed/SQuAD/dev-v1.1-meta.pkl',
+    default=data_folder + 'processed/SQuAD/dev-v2.0-meta.pkl',
     type=str, help='path of dev dataset meta file')
 parser.add_argument(
     '--train_eval_file',
-    default=data_folder + 'processed/SQuAD/train-v1.1-eval.pkl',
+    default=data_folder + 'processed/SQuAD/train-v2.0-eval.pkl',
     type=str, help='path of train dataset eval file')
 parser.add_argument(
     '--dev_eval_file',
-    default=data_folder + 'processed/SQuAD/dev-v1.1-eval.pkl',
+    default=data_folder + 'processed/SQuAD/dev-v2.0-eval.pkl',
     type=str, help='path of dev dataset eval file')
 parser.add_argument(
     '--val_num_batches',
@@ -68,7 +70,7 @@ parser.add_argument(
 # embedding
 parser.add_argument(
     '--glove_word_file',
-    default=data_folder + 'original/Glove/glove.840B.300d.txt',
+    default=data_folder + '.vector_cache/glove.840B.300d.txt',
     type=str, help='path of word embedding file')
 parser.add_argument(
     '--glove_word_size',
@@ -93,7 +95,7 @@ parser.add_argument(
     help='whether train char embedding or not')
 parser.add_argument(
     '--glove_char_file',
-    default=data_folder + "original/Glove/glove.840B.300d-char.txt",
+    default=data_folder + ".vector_cache/glove.840B.300d-char.txt",
     type=str, help='path of char embedding file')
 parser.add_argument(
     '--glove_char_size',
