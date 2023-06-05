@@ -133,7 +133,7 @@ class Trainer(object):
             y2 = y2.to(self.device)
             id = id.to(self.device)
             answerable = answerable.to(self.device)
-
+            import pdb; pdb.set_trace()
             # calculate loss
             self.model.zero_grad()
             p1, p2 = self.model(
