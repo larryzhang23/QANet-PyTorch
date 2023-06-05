@@ -346,26 +346,38 @@ class QANet(nn.Module):
                  self.PAD != Cwid).float()
         maskQ = (torch.ones_like(Qwid) *
                  self.PAD != Qwid).float()
+        print(maskC.shape, maskQ.shape)
+        print(maskC[0])
         Cw, Cc = self.word_emb(Cwid), self.char_emb(Ccid)
-        import pdb; pdb.set_trace()
+        print(Cw.shape, Cc.shape)
         Qw, Qc = self.word_emb(Qwid), self.char_emb(Qcid)
+        print(Qw.shape, Qc.shape)
         C, Q = self.emb(Cc, Cw, self.Lc), self.emb(Qc, Qw, self.Lq)
+        print(C.shape, Q.shape)
         Ce = self.emb_enc(C, maskC, 1, 1)
         Qe = self.emb_enc(Q, maskQ, 1, 1)
+        print(Ce.shape, Qe.shape)
         X = self.cq_att(Ce, Qe, maskC, maskQ)
+        print(X.shape)
         M0 = self.cq_resizer(X)
+        print(M0.shape)
         M0 = F.dropout(M0, p=self.dropout, training=self.training)
         for i, blk in enumerate(self.model_enc_blks):
              M0 = blk(M0, maskC, i*(2+2)+1, 7)
         M1 = M0
+        print(M1.shape)
         for i, blk in enumerate(self.model_enc_blks):
              M0 = blk(M0, maskC, i*(2+2)+1, 7)
         M2 = M0
+        print(M2.shape)
         M0 = F.dropout(M0, p=self.dropout, training=self.training)
         for i, blk in enumerate(self.model_enc_blks):
              M0 = blk(M0, maskC, i*(2+2)+1, 7)
         M3 = M0
+        print(M3.shape)
         p1, p2 = self.out(M1, M2, M3, maskC)
+        print(p1.shape, p2.shape)
+        import pdb; pdb.set_trace()
         return p1, p2
 
     def summary(self):
