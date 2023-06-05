@@ -347,6 +347,7 @@ class QANet(nn.Module):
         maskQ = (torch.ones_like(Qwid) *
                  self.PAD != Qwid).float()
         Cw, Cc = self.word_emb(Cwid), self.char_emb(Ccid)
+        import pdb; pdb.set_trace()
         Qw, Qc = self.word_emb(Qwid), self.char_emb(Qcid)
         C, Q = self.emb(Cc, Cw, self.Lc), self.emb(Qc, Qw, self.Lq)
         Ce = self.emb_enc(C, maskC, 1, 1)
