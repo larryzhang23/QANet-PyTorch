@@ -79,7 +79,6 @@ class Trainer(object):
         patience = 0
         for epoch in range(self.start_epoch, self.epochs + 1):
             result = self._train_epoch(epoch)
-            wandb.log({"train_exact_match": result["em"], "train_f1": result["f1"]})
 
             if self.use_early_stop:
                 if result["f1"] < self.best_f1 and result["em"] < self.best_em:
@@ -107,6 +106,7 @@ class Trainer(object):
         self.model.to(self.device)
 
         # initialize
+        epoch_loss = 0.0
         global_loss = 0.0
         last_step = self.step - 1
         last_time = time.time()
@@ -150,6 +150,7 @@ class Trainer(object):
             loss = torch.mean(loss1 + loss2)
             loss.backward()
             global_loss += loss.item()
+            epoch_loss += loss.item()
 
             # gradient clip
             if self.use_grad_clip:
@@ -184,7 +185,6 @@ class Trainer(object):
                            self.scheduler.get_lr(),
                            batch_loss,
                            speed))
-                wandb.log({"lr": self.scheduler.get_lr(), "train_loss": batch_loss})
                 global_loss = 0.0
                 last_step = self.step
                 last_time = time.time()
@@ -200,6 +200,7 @@ class Trainer(object):
         result = {}
         result["em"] = metrics["exact_match"]
         result["f1"] = metrics["f1"]
+        wandb.log({"lr": self.scheduler.get_lr(), "train_loss": batch_loss, "val_exact_match": result["em"], "val_f1": result["f1"]})
         return result
 
     def _valid_eopch(self, eval_dict, data_loader):
