@@ -8,9 +8,9 @@ import time
 import torch
 import torch.nn.functional as F
 from datetime import datetime
+import wandb
 from .metric import convert_tokens, evaluate_by_dict
 from util.file_utils import pickle_load_large_file
-
 
 class Trainer(object):
 
@@ -79,6 +79,7 @@ class Trainer(object):
         patience = 0
         for epoch in range(self.start_epoch, self.epochs + 1):
             result = self._train_epoch(epoch)
+            wandb.log({"train_exact_match": result["em"], "train_f1": result["f1"]})
 
             if self.use_early_stop:
                 if result["f1"] < self.best_f1 and result["em"] < self.best_em:

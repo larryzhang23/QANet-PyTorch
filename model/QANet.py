@@ -346,37 +346,37 @@ class QANet(nn.Module):
                  self.PAD != Cwid).float()
         maskQ = (torch.ones_like(Qwid) *
                  self.PAD != Qwid).float()
-        print(f"maskC: {maskC.shape}, maskQ: {maskQ.shape}")
+        # print(f"maskC: {maskC.shape}, maskQ: {maskQ.shape}")
         Cw, Cc = self.word_emb(Cwid), self.char_emb(Ccid)
-        print(f"Cw: {Cw.shape}, Cc: {Cc.shape}")
+        # print(f"Cw: {Cw.shape}, Cc: {Cc.shape}")
         Qw, Qc = self.word_emb(Qwid), self.char_emb(Qcid)
-        print(f"Qw: {Qw.shape}, Qc: {Qc.shape}")
+        # print(f"Qw: {Qw.shape}, Qc: {Qc.shape}")
         C, Q = self.emb(Cc, Cw, self.Lc), self.emb(Qc, Qw, self.Lq)
-        print(f"C: {C.shape}, Q: {Q.shape}")
+        # print(f"C: {C.shape}, Q: {Q.shape}")
         Ce = self.emb_enc(C, maskC, 1, 1)
         Qe = self.emb_enc(Q, maskQ, 1, 1)
-        print(f"Ce: {Ce.shape}, Qe: {Qe.shape}")
+        # print(f"Ce: {Ce.shape}, Qe: {Qe.shape}")
         X = self.cq_att(Ce, Qe, maskC, maskQ)
-        print(f"X: {X.shape}")
+        # print(f"X: {X.shape}")
         M0 = self.cq_resizer(X)
-        print(f"M0: {M0.shape}")
+        # print(f"M0: {M0.shape}")
         M0 = F.dropout(M0, p=self.dropout, training=self.training)
         for i, blk in enumerate(self.model_enc_blks):
              M0 = blk(M0, maskC, i*(2+2)+1, 7)
         M1 = M0
-        print(f"M1: {M1.shape}")
+        # print(f"M1: {M1.shape}")
         for i, blk in enumerate(self.model_enc_blks):
              M0 = blk(M0, maskC, i*(2+2)+1, 7)
         M2 = M0
-        print(f"M2: {M2.shape}")
+        # print(f"M2: {M2.shape}")
         M0 = F.dropout(M0, p=self.dropout, training=self.training)
         for i, blk in enumerate(self.model_enc_blks):
              M0 = blk(M0, maskC, i*(2+2)+1, 7)
         M3 = M0
-        print(f"M3: {M3.shape}")
+        # print(f"M3: {M3.shape}")
         p1, p2 = self.out(M1, M2, M3, maskC)
-        print(f"p1: {p1.shape}, p2: {p2.shape}")
-        import pdb; pdb.set_trace()
+        # print(f"p1: {p1.shape}, p2: {p2.shape}")
+        # import pdb; pdb.set_trace()
         return p1, p2
 
     def summary(self):
