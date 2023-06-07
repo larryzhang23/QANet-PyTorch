@@ -184,6 +184,7 @@ class Trainer(object):
                            self.scheduler.get_lr(),
                            batch_loss,
                            speed))
+                wandb.log({"lr": self.scheduler.get_lr(), "train_loss": batch_loss})
                 global_loss = 0.0
                 last_step = self.step
                 last_time = time.time()
