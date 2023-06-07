@@ -331,7 +331,7 @@ def main(args):
 
     # set visdom visualizer to store training process information
     # see the training process on http://localhost:8097/
-    # vis = None
+    vis = None
     # if args.visualizer:
     #     os.system("python -m visdom.server")
     #     vis = Visualizer("main")
