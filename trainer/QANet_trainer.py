@@ -77,29 +77,30 @@ class Trainer(object):
 
     def train(self):
         patience = 0
-        for epoch in range(self.start_epoch, self.epochs + 1):
-            result = self._train_epoch(epoch)
+        metrics = self._valid_eopch(self.dev_eval_dict, self.dev_data_loader)
+        # for epoch in range(self.start_epoch, self.epochs + 1):
+        #     result = self._train_epoch(epoch)
 
-            if self.use_early_stop:
-                if result["f1"] < self.best_f1 and result["em"] < self.best_em:
-                    patience += 1
-                    if patience > self.early_stop:
-                        print("Perform early stop!")
-                        break
-                else:
-                    patience = 0
+        #     if self.use_early_stop:
+        #         if result["f1"] < self.best_f1 and result["em"] < self.best_em:
+        #             patience += 1
+        #             if patience > self.early_stop:
+        #                 print("Perform early stop!")
+        #                 break
+        #         else:
+        #             patience = 0
 
-            is_best = False
-            if result["f1"] > self.best_f1:
-                is_best = True
-            if result["f1"] == self.best_f1 and result["em"] > self.best_em:
-                is_best = True
-            self.best_f1 = max(self.best_f1, result["f1"])
-            self.best_em = max(self.best_em, result["em"])
+        #     is_best = False
+        #     if result["f1"] > self.best_f1:
+        #         is_best = True
+        #     if result["f1"] == self.best_f1 and result["em"] > self.best_em:
+        #         is_best = True
+        #     self.best_f1 = max(self.best_f1, result["f1"])
+        #     self.best_em = max(self.best_em, result["em"])
 
-            if epoch % self.save_freq == 0:
-                self._save_checkpoint(
-                    epoch, result["f1"], result["em"], is_best)
+        #     if epoch % self.save_freq == 0:
+        #         self._save_checkpoint(
+        #             epoch, result["f1"], result["em"], is_best)
 
     def _train_epoch(self, epoch):
         self.model.train()
