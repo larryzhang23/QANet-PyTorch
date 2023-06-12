@@ -119,6 +119,7 @@ def get_examples(filename, data_type, word_counter, char_counter,
                     examples.append(example)
                     eval_examples[str(meta["num_q"])] = {
                         "context": context,
+                        "question": qa["question"], 
                         "spans": spans,
                         "answers": answer_texts,
                         "uuid": qa["id"]}

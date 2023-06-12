@@ -77,6 +77,7 @@ class Trainer(object):
 
     def train(self):
         patience = 0
+        self.model.to(self.device)
         metrics = self._valid_eopch(self.dev_eval_dict, self.dev_data_loader)
         print(metrics)
         # for epoch in range(self.start_epoch, self.epochs + 1):
