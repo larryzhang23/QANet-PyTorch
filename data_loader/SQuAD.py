@@ -119,10 +119,11 @@ def get_examples(filename, data_type, word_counter, char_counter,
                     examples.append(example)
                     eval_examples[str(meta["num_q"])] = {
                         "context": context,
-                        "question": qa["question"], 
                         "spans": spans,
                         "answers": answer_texts,
                         "uuid": qa["id"]}
+                    if data_type != "train":
+                        eval_examples[str(meta["num_q"])]["question"] = ques
                     if debug and meta["num_q"] >= debug_length:
                         return examples, meta
         random.shuffle(examples)
