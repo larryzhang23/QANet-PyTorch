@@ -340,50 +340,50 @@ def main(args):
     # an identifier (prefix) for saved model
     identifier = type(model).__name__ + '_'
 
-    with wandb.init(
-        config=vars(args),
-        project="QANET",
-        tags="Bang",
-        name="qanet-840b-glove",
-        notes="Bangliu code",
-    ) as run:
-        trainer = Trainer(
-            args, model, loss,
-            train_data_loader=train_dataloader,
-            dev_data_loader=dev_dataloader,
-            train_eval_file=args.train_eval_file,
-            dev_eval_file=args.dev_eval_file,
-            optimizer=optimizer,
-            scheduler=scheduler,
-            epochs=args.epochs,
-            with_cuda=args.with_cuda,
-            save_dir=args.save_dir,
-            verbosity=args.verbosity,
-            save_freq=args.save_freq,
-            print_freq=args.print_freq,
-            resume=args.resume,
-            identifier=identifier,
-            debug=args.debug,
-            debug_batchnum=args.debug_batchnum,
-            lr=args.lr,
-            lr_warm_up_num=args.lr_warm_up_num,
-            grad_clip=args.grad_clip,
-            decay=args.decay,
-            visualizer=vis,
-            logger=log,
-            use_scheduler=args.use_scheduler,
-            use_grad_clip=args.use_grad_clip,
-            use_ema=args.use_ema,
-            ema=ema,
-            use_early_stop=args.use_early_stop,
-            early_stop=args.early_stop)
+    # with wandb.init(
+    #     config=vars(args),
+    #     project="QANET",
+    #     tags="Bang",
+    #     name="qanet-840b-glove",
+    #     notes="Bangliu code",
+    # ) as run:
+    trainer = Trainer(
+        args, model, loss,
+        train_data_loader=train_dataloader,
+        dev_data_loader=dev_dataloader,
+        train_eval_file=args.train_eval_file,
+        dev_eval_file=args.dev_eval_file,
+        optimizer=optimizer,
+        scheduler=scheduler,
+        epochs=args.epochs,
+        with_cuda=args.with_cuda,
+        save_dir=args.save_dir,
+        verbosity=args.verbosity,
+        save_freq=args.save_freq,
+        print_freq=args.print_freq,
+        resume=args.resume,
+        identifier=identifier,
+        debug=args.debug,
+        debug_batchnum=args.debug_batchnum,
+        lr=args.lr,
+        lr_warm_up_num=args.lr_warm_up_num,
+        grad_clip=args.grad_clip,
+        decay=args.decay,
+        visualizer=vis,
+        logger=log,
+        use_scheduler=args.use_scheduler,
+        use_grad_clip=args.use_grad_clip,
+        use_ema=args.use_ema,
+        ema=ema,
+        use_early_stop=args.use_early_stop,
+        early_stop=args.early_stop)
 
-        # start training!
-        start = datetime.now()
-        print(trainer.dev_eval_dict['1'])
-        
-        trainer.train()
-        print("Time of training model ", datetime.now() - start)
+    # start training!
+    start = datetime.now()
+    print(trainer.dev_eval_dict['1'])
+    
+    trainer.train()
+    print("Time of training model ", datetime.now() - start)
 
 
 if __name__ == '__main__':
