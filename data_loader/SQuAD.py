@@ -351,6 +351,7 @@ def prepro(config):
         config, dev_examples, dev_meta, "dev",
         word2idx_dict, char2idx_dict)
 
+    save(config.dev_eval_file, dev_eval, message="dev eval")
     save(config.word_emb_file, word_emb_mat, message="word embedding")
     save(config.char_emb_file, char_emb_mat, message="char embedding")
     save(config.word_dictionary, word2idx_dict, message="word dictionary")
@@ -360,7 +361,6 @@ def prepro(config):
     save(config.train_meta_file, train_meta, message="train meta")
     save(config.dev_meta_file, dev_meta, message="dev meta")
     save(config.train_eval_file, train_eval, message="train eval")
-    save(config.dev_eval_file, dev_eval, message="dev eval")
 
 
 class SQuAD(Dataset):
