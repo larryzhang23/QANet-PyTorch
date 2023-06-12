@@ -221,8 +221,8 @@ def evaluate_by_dict(eval_dict, answer_dict):
         total += 1
         ground_truths = eval_dict[key]["answers"]
         prediction = value
-        print(value)
-        import pdb; pdb.set_trace()
+        print(value, end=';')
+        # import pdb; pdb.set_trace()
         em_val = metric_max_over_ground_truths(
             exact_match_score, prediction, ground_truths)
         f1_val = metric_max_over_ground_truths(
