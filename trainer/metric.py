@@ -216,18 +216,27 @@ def convert_tokens(eval_dict, qa_id, pp1, pp2):
 
 def evaluate_by_dict(eval_dict, answer_dict):
     f1 = exact_match = total = 0
+    res = {}
     for key, value in answer_dict.items():
         total += 1
         ground_truths = eval_dict[key]["answers"]
-        print(key, value)
-        import pdb; pdb.set_trace()
         prediction = value
-        exact_match += metric_max_over_ground_truths(
+        print(value)
+        import pdb; pdb.set_trace()
+        em_val = metric_max_over_ground_truths(
             exact_match_score, prediction, ground_truths)
-        f1 += metric_max_over_ground_truths(
+        f1_val = metric_max_over_ground_truths(
             f1_score, prediction, ground_truths)
+        exact_match += em_val 
+        f1 += f1_val
+        res[key] = eval_dict[key]
+        res[key]['pred'] = prediction
+        res[key]['f1'] = f1_val 
+        res[key]['em'] = em_val
     exact_match = 100.0 * exact_match / total
     f1 = 100.0 * f1 / total
+    with open("eval_res.json", "w") as f:
+        f.write(json.dumps(res))
     return {'exact_match': exact_match, 'f1': f1}
 
 

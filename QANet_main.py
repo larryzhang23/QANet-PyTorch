@@ -380,8 +380,6 @@ def main(args):
 
     # start training!
     start = datetime.now()
-    print(trainer.dev_eval_dict['1'])
-    
     trainer.train()
     print("Time of training model ", datetime.now() - start)
 
